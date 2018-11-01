@@ -1,0 +1,1392 @@
+<!DOCTYPE html>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+<html class="theme-next muse use-motion" lang="zh-CN">
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#fff">
+
+
+
+
+
+
+  
+  
+    
+      
+    
+    
+  <script src="true"></script>
+  <link href="/lib/pace/pace-theme-flash.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform">
+<meta http-equiv="Cache-Control" content="no-siteapp">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css">
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css">
+
+<link href="/css/main.css?v=6.4.2" rel="stylesheet" type="text/css">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/global/favicon-32x32-next.png?v=6.4.2">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/global/favicon-16x16-next.png?v=6.4.2">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=6.4.2" color="#fff">
+
+
+
+
+
+
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Muse',
+    version: '6.4.2',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":true,"onmobile":false},
+    fancybox: true,
+    fastclick: false,
+    lazyload: false,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+  
+
+
+
+
+  <meta name="description" content="概念理解单线程、异步非阻塞I/O、事件驱动 是Node.js的三大闪光点。其中，理解异步非阻塞I/O模型是学习node过程中的一大难点。">
+<meta name="keywords" content="node">
+<meta property="og:type" content="article">
+<meta property="og:title" content="node.js的异步IO机制">
+<meta property="og:url" content="https://zhaoluting.github.io/2018/05/29/asynchronous/index.html">
+<meta property="og:site_name" content="zhaoluting">
+<meta property="og:description" content="概念理解单线程、异步非阻塞I/O、事件驱动 是Node.js的三大闪光点。其中，理解异步非阻塞I/O模型是学习node过程中的一大难点。">
+<meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="https://zhaoluting.github.io/image/asynchronous/异步流程图.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/asynchronous/请求对象.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/asynchronous/多线程.png">
+<meta property="og:image" content="https://zhaoluting.github.io/image/asynchronous/事件循环.png">
+<meta property="og:updated_time" content="2018-11-01T07:37:50.216Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="node.js的异步IO机制">
+<meta name="twitter:description" content="概念理解单线程、异步非阻塞I/O、事件驱动 是Node.js的三大闪光点。其中，理解异步非阻塞I/O模型是学习node过程中的一大难点。">
+<meta name="twitter:image" content="https://zhaoluting.github.io/image/asynchronous/异步流程图.png">
+
+
+
+
+
+
+  <link rel="canonical" href="https://zhaoluting.github.io/2018/05/29/asynchronous/">
+
+
+
+<script type="text/javascript" id="page.configurations">
+  CONFIG.page = {
+    sidebar: "",
+  };
+</script>
+
+  <title>node.js的异步IO机制 | zhaoluting</title>
+  
+
+
+
+
+
+
+
+
+
+
+
+  <noscript>
+  <style type="text/css">
+    .use-motion .motion-element,
+    .use-motion .brand,
+    .use-motion .menu-item,
+    .sidebar-inner,
+    .use-motion .post-block,
+    .use-motion .pagination,
+    .use-motion .comments,
+    .use-motion .post-header,
+    .use-motion .post-body,
+    .use-motion .collection-title { opacity: initial; }
+
+    .use-motion .logo,
+    .use-motion .site-title,
+    .use-motion .site-subtitle {
+      opacity: initial;
+      top: initial;
+    }
+
+    .use-motion {
+      .logo-line-before i { left: initial; }
+      .logo-line-after i { right: initial; }
+    }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">zhaoluting</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+    
+  </div>
+
+  <div class="site-nav-toggle">
+    <button aria-label="切换导航栏">
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  
+    <ul id="menu" class="menu">
+      
+        
+        
+        
+          
+          <li class="menu-item menu-item-home">
+    <a href="/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-home"></i> <br>首页</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-about">
+    <a href="/about/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-user"></i> <br>关于</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-tags">
+    <a href="/tags/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>标签</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-categories">
+    <a href="/categories/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-th"></i> <br>分类</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-archives">
+    <a href="/archives/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
+  </li>
+        
+        
+        
+          
+          <li class="menu-item menu-item-schedule">
+    <a href="/schedule/" rel="section">
+      <i class="menu-item-icon fa fa-fw fa-calendar"></i> <br>日程表</a>
+  </li>
+
+      
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br>搜索</a>
+        </li>
+      
+    </ul>
+  
+
+  
+    
+
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off" placeholder="搜索..." spellcheck="false" type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+  
+
+
+
+</div>
+    </header>
+
+    
+
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/05/29/asynchronous/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+      <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">node.js的异步IO机制
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-05-29 17:33:10" itemprop="dateCreated datePublished" datetime="2018-05-29T17:33:10+08:00">2018-05-29</time>
+            
+
+            
+              
+
+              
+                
+                <span class="post-meta-divider">|</span>
+                
+
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2018-11-01 15:37:50" itemprop="dateModified" datetime="2018-11-01T15:37:50+08:00">2018-11-01</time>
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="概念理解"><a href="#概念理解" class="headerlink" title="概念理解"></a>概念理解</h2><p><strong>单线程</strong>、<strong>异步非阻塞I/O</strong>、<strong>事件驱动</strong> 是Node.js的三大闪光点。其中，理解异步非阻塞I/O模型是学习node过程中的一大难点。</p>
+<a id="more"></a>
+<h3 id="什么是I-O"><a href="#什么是I-O" class="headerlink" title="什么是I/O"></a>什么是I/O</h3><p>I/O在计算机中指Input/Output，也就是输入和输出，分为I/O设备和I/O接口两个部分。</p>
+<ul>
+<li>I/O接口是CPU和I/O设备之间交换信息的媒介和桥梁。由于程序和运行时数据是在内存中驻留，由CPU这个超快的计算核心来执行，涉及到数据交换的地方，通常是磁盘、网络等。</li>
+<li>现代计算机系统中配置了大量的外围设备，即I/O设备。通常进行如下分类：<ul>
+<li>字符设备，又叫做人机交互设备，例如，键盘和显示器为一体的字符终端、打印机、鼠标等。</li>
+<li>块设备，又叫外部存储器，用户通过这些设备实现程序和数据的长期保存，如磁盘、光盘等。</li>
+<li>网络通信设备。这类设备主要有网卡、调制解调器等，主要用于与远程设备的通信。</li>
+</ul>
+</li>
+</ul>
+<h3 id="同步与异步I-O"><a href="#同步与异步I-O" class="headerlink" title="同步与异步I/O"></a>同步与异步I/O</h3><p>由于CPU和内存的速度远远高于外设的速度，所以，在I/O编程中，就存在速度严重不匹配的问题。比如要把100M的数据写入磁盘，CPU输出100M的数据只需要0.01秒，可是磁盘要接收这100M数据可能需要10秒，怎么办呢？有两种办法：</p>
+<ul>
+<li>同步I/O：CPU等待，也就是程序暂停执行后续代码，等100M的数据在10秒后写入磁盘，再接着往下执行。</li>
+<li>异步I/O：CPU不等待，后续代码可以立刻接着执行。<ul>
+<li>实现方式1：主动轮询异步调用的结果。</li>
+<li>实现方式2：被调用方通过callback来通知调用方调用结果。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>同步和异步是一种通信机制，涉及到调用方和被调用方，关注的是I/O操作的执行过程及结果的返回方式，不同点在于双方在这两个方面的行为方式。</p>
+</blockquote>
+<h3 id="阻塞与非阻塞I-O"><a href="#阻塞与非阻塞I-O" class="headerlink" title="阻塞与非阻塞I/O"></a>阻塞与非阻塞I/O</h3><ul>
+<li>阻塞I/O：调用结果返回之前，该执行线程会被挂起，不释放CPU执行权，线程不能做其它事情，只有等到调用结果返回了，才能接着往下执行</li>
+<li>非阻塞I/O：在没有获取调用结果时，线程可以往下执行，而不是等待。<ul>
+<li>如果是同步的，会通过轮询的方式检查有没有调用结果返回；</li>
+<li>如果是异步的，会通知回调。</li>
+</ul>
+</li>
+</ul>
+<blockquote>
+<p>阻塞和非阻塞是一种调用机制，只涉及到调用方，关注的是I/O操作的执行状态，不同点在于请求I/O操作后，针对I/O操作的状态，调用方的行为方式。</p>
+</blockquote>
+<h3 id="举个🌰"><a href="#举个🌰" class="headerlink" title="举个🌰"></a>举个🌰</h3><p>故事：老张烧开水。<br>出场人物：老张，普通水壶，会响的水壶。</p>
+<ol>
+<li>老张把水壶放到火上，立等水开。<strong>（同步阻塞）</strong> </li>
+<li>老张把水壶放到火上，去客厅看电视，时不时去厨房看看水开没有。<strong>（同步非阻塞）</strong>     </li>
+<li>老张买了把会响笛的水壶。水开之后能发出嘀~~~~的噪音。老张把响水壶放火上，立等水开。<strong>（异步阻塞）</strong> </li>
+<li>老张把响水壶放到火上，去客厅看电视，水壶响之前不再去看它了，响了再去拿壶。<strong>（异步非阻塞）</strong>   </li>
+</ol>
+<p>所谓同步异步，只是对于水壶而言。<br>普通水壶，同步；响水壶，异步。<br>虽然都能干活，但响水壶可以在自己完工之后，提示老张水开了。这是普通水壶所不能及的。同步只能让调用者去轮询自己（情况2中），造成老张效率的低下。 </p>
+<p>所谓阻塞非阻塞，仅仅对于老张而言。<br>立等的老张，阻塞；看电视的老张，非阻塞。<br>情况1和情况3中老张就是阻塞的，电视放什么他都不知道。虽然3中响水壶是异步的，可对于立等的老张没有太大的意义。所以一般异步是配合非阻塞使用的，这样才能发挥异步的效用。</p>
+<h2 id="Node-js与异步"><a href="#Node-js与异步" class="headerlink" title="Node.js与异步"></a>Node.js与异步</h2><h3 id="Node为什么要选择异步？"><a href="#Node为什么要选择异步？" class="headerlink" title="Node为什么要选择异步？"></a>Node为什么要选择异步？</h3><h4 id="1、前提条件：JavaScript是单线程的"><a href="#1、前提条件：JavaScript是单线程的" class="headerlink" title="1、前提条件：JavaScript是单线程的"></a>1、前提条件：JavaScript是单线程的</h4><p>JavaScript语言的一大特点就是单线程，也就是说，同一个时间只能做一件事。JavaScript的单线程，与它的用途有关。作为浏览器脚本语言，JavaScript的主要用途是与用户互动，以及操作DOM。这决定了它只能是单线程，否则会带来很复杂的同步问题。比如，假定JavaScript同时有两个线程，一个线程在某个DOM节点上添加内容，另一个线程删除了这个节点，这时浏览器应该以哪个线程为准？<strong>所以，为了避免复杂性，从一诞生，JavaScript就是单线程，这已经成了这门语言的核心特征，将来也不会改变。</strong></p>
+<blockquote>
+<p>为了利用多核CPU的计算能力，HTML5提出Web Worker标准，允许JavaScript脚本创建多个线程，但是子线程完全受主线程控制，且不得操作DOM。所以，这个新标准并没有改变JavaScript单线程的本质。</p>
+</blockquote>
+<h4 id="2、从用户体验角度讲，异步I-O可以消除UI阻塞，快速响应资源"><a href="#2、从用户体验角度讲，异步I-O可以消除UI阻塞，快速响应资源" class="headerlink" title="2、从用户体验角度讲，异步I/O可以消除UI阻塞，快速响应资源"></a>2、从用户体验角度讲，异步I/O可以消除UI阻塞，快速响应资源</h4><ul>
+<li>JavaScript是单线程的，它与UI渲染共用一个线程。所以在JavaScript执行的时候，UI渲染将处于停顿的状态，用户体验较差。而异步请求可以在下载资源的时候，JavaScript和UI渲染都同时执行，消除UI阻塞，降低响应资源需要的时间开销。</li>
+<li>假如一个资源来自两个不同位置的数据的返回，第一个资源需要M毫秒的耗时，第二个资源需要N毫秒的耗时。<ul>
+<li>当采用同步的方式，总耗时为（M+N）毫秒。</li>
+<li>当采用异步的方式，总耗时为max（M，N）毫秒。</li>
+</ul>
+</li>
+</ul>
+<h4 id="3、从资源分配角度讲，异步I-O可以让单线程远离阻塞，以更好地利用CPU"><a href="#3、从资源分配角度讲，异步I-O可以让单线程远离阻塞，以更好地利用CPU" class="headerlink" title="3、从资源分配角度讲，异步I/O可以让单线程远离阻塞，以更好地利用CPU"></a>3、从资源分配角度讲，异步I/O可以让单线程远离阻塞，以更好地利用CPU</h4><ul>
+<li>假设业务线上有一组互不相关的任务需要完成，现行的主流方法有以下两种：<ul>
+<li>单线程同步执行：会阻塞I/O导致硬件资源和CPU得不到更优的使用。</li>
+<li>多线程并发执行：会出现死锁、状态同步等问题。</li>
+</ul>
+</li>
+<li>Node的解决方案<ul>
+<li>利用单线程远离多线程的死锁、状态同步等问题。</li>
+<li>利用异步I/O，让单线程远离阻塞，更好的利CPU。</li>
+</ul>
+</li>
+</ul>
+<h3 id="Node如何实现异步I-O？"><a href="#Node如何实现异步I-O？" class="headerlink" title="Node如何实现异步I/O？"></a>Node如何实现异步I/O？</h3><p><strong>事件循环、观察者、请求对象、I/O线程池这四者共同构成了Node异步I/O模型的基本要素。</strong><br><img src="/image/asynchronous/异步流程图.png" alt="异步流程图"><br>整个实现过程大概更可以描述为：  </p>
+<ul>
+<li>发起异步请求之后将请求进行封装，封装为请求对象，对请求对象设置参数和回调函数并将请求对象放入线程池，线程池中检查是否有可用线程，当线程可用时执行请求对象的I/O操作，并将执行完成的结果放入请求对象中，通知IOCP调用完成并获取完成的I/O交给I/O观察者。</li>
+<li>在libuv中创建主循环开始事件循环，主循环从I/O观察者中取出可用的请求对象，在请求对象中取出回调函数和I/O结果并调用回调函数。</li>
+</ul>
+<h4 id="名词解析"><a href="#名词解析" class="headerlink" title="名词解析"></a>名词解析</h4><ul>
+<li><p>观察者：事件循环判断是否有事件待执行，就是通过询问观察者，观察者不会主动通知进程，而是进程询问时才返回结果。 </p>
+<blockquote>
+<p>事件循环是生产者/消费者模型。异步I/O和网络请求是事件的生产者，这些事件被输送到观察者，事件循环是消费者，从观察者这里取出事件处理。观察者就相当于模型中的缓冲区，生产者不断产生事件放到缓冲区，而消费者从缓冲区里取出事件进行消费。</p>
+</blockquote>
+</li>
+<li><p>libuv：libuv库负责Node API的执行。它将不同的任务分配给不同的线程，形成一个Event Loop（事件循环），以异步的方式将任务的执行结果返回给V8引擎。它是Node.js实现异步的核心。</p>
+</li>
+<li><p>请求对象：从JavaScript发起调用到内核执行完I/O操作的过渡过程中，存在一种中间产物，叫做请求对象。从JavaScript传入的参数和当前方法都被封装在这个请求对象中，其中回调函数则被设置在这个对象的oncomplete_sym属性上。<br><img src="/image/asynchronous/请求对象.png" alt="请求对象"><br>假设fs.open()，根据指定路径和参数打开文件。在JS发起调用后，JS调用Node的核心模块（lib/fs.js），核心模块调用C++内建模块(node_file.cc)，內建模块通过libuv判断平台(是*nix还是win)并进行系统调用。在进行系统调用时，从JS层传入的方法和参数都被封装在一个请求对象FSReqWrap中，请求对象被放在线程池中等待执行。JS立即返回继续下面的操作。</p>
+</li>
+<li><p>I/O线程池：在Node中，JS是在单线程中执行的，但是内部完成I/O工作的另有线程池，使用一个主进程和多个I/O线程来模拟异步I/O。当主线程发起I/O调用时，I/O操作会被放在I/O线程来执行，主线程继续执行下面的任务。I/O操作不管是否阻塞，都不会影响JS执行线程的执行。在I/O线程完成操作后会带着数据通知主线程发起回调。<br><img src="/image/asynchronous/多线程.png" alt="多线程"><br><strong>因此，Node.js 的单线程仅仅是指 JavaScript 运行在单线程中，而并非 Node.js 是单线程。</strong></p>
+</li>
+<li><p>事件队列：Node.js 在主线程里维护了一个事件队列，当接到请求后，就将该请求作为一个事件放入这个队列中，然后继续接收其他请求。当主线程空闲时(没有请求接入时)，就开始循环事件队列，检查队列中是否有要处理的事件，这时要分两种情况：如果是非 I/O 任务，就亲自处理，并通过回调函数返回到上层调用；如果是 I/O 任务，就从 线程池 中拿出一个线程来处理这个事件，并指定回调函数，然后继续循环队列中的其他事件。</p>
+</li>
+<li><p>事件循环 (Event Loop)：在进程启动时，Node会创建一个类似于While(true)的循环，每执行一次循环体的过程称为Tick。每个Tick过程中观察者会查看是否有事件需要处理，如果有就取出事件及其相关的回调函数并执行。然后进入下一个Tick。如果没有事件处理，就退出进程。<br><img src="/image/asynchronous/事件循环.png" alt="事件循环"></p>
+</li>
+<li><p>执行回调：I/O执行结束后，会将结果通知IOCP（windows下,linux下epoll），并将线程归还线程池。使用事件循环的I/O观察者，如果有已经执行完的I/O，则将请求对象加入I/O观察者队列中，事件循环再Tick过程中，检测到有I/O观察者，则取出其中的请求对象，再取出请求对象中的回调函数执行。 </p>
+</li>
+</ul>
+<h4 id="代码模拟"><a href="#代码模拟" class="headerlink" title="代码模拟"></a>代码模拟</h4><p>Node.js 实现异步的核心是事件，也就是说，它把每一个任务都当成 事件 来处理，然后通过 Event Loop 模拟了异步的效果，为了更具体、更清晰的理解和接受这个事实，下面我们用伪代码来描述一下其工作原理 。</p>
+<h5 id="【1】定义事件队列"><a href="#【1】定义事件队列" class="headerlink" title="【1】定义事件队列"></a>【1】定义事件队列</h5><p>既然是队列，那就是一个先进先出 (FIFO) 的数据结构，我们用JS数组来描述，如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 定义事件队列</span></span><br><span class="line"><span class="comment"> * 入队：push()</span></span><br><span class="line"><span class="comment"> * 出队：shift()</span></span><br><span class="line"><span class="comment"> * 空队列：length == 0</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">globalEventQueue: []</span><br></pre></td></tr></table></figure>
+<p>我们利用数组来模拟队列结构：数组的第一个元素是队列的头部，数组的最后一个元素是队列的尾部，push() 就是在队列尾部插入一个元素，shift() 就是从队列头部弹出一个元素。这样就实现了一个简单的事件队列。</p>
+<h5 id="【2】定义接收请求入口"><a href="#【2】定义接收请求入口" class="headerlink" title="【2】定义接收请求入口"></a>【2】定义接收请求入口</h5><p>每一个请求都会被拦截并进入处理函数，如下所示： </p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 接收用户请求</span></span><br><span class="line"><span class="comment"> * 每一个请求都会进入到该函数</span></span><br><span class="line"><span class="comment"> * 传递参数request和response</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">processHttpRequest:<span class="function"><span class="keyword">function</span>(<span class="params">request,response</span>)</span>&#123;</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// 定义一个事件对象</span></span><br><span class="line">    <span class="keyword">var</span> event = createEvent(&#123;</span><br><span class="line">        params:request.params, <span class="comment">// 传递请求参数</span></span><br><span class="line">        result:<span class="literal">null</span>, <span class="comment">// 存放请求结果</span></span><br><span class="line">        callback:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;&#125; <span class="comment">// 指定回调函数</span></span><br><span class="line">    &#125;);</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 在队列的尾部添加该事件  </span></span><br><span class="line">    globalEventQueue.push(event);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>这个函数就是把用户的请求包装成事件，放到队列里，然后继续接收其他请求。</p>
+<h5 id="【3】定义-Event-Loop"><a href="#【3】定义-Event-Loop" class="headerlink" title="【3】定义 Event Loop"></a>【3】定义 Event Loop</h5><p>当主线程处于空闲时就开始循环事件队列，所以我们还要定义一个函数来循环事件队列：<br><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 事件循环主体，主线程择机执行</span></span><br><span class="line"><span class="comment"> * 循环遍历事件队列</span></span><br><span class="line"><span class="comment"> * 处理非I/O任务</span></span><br><span class="line"><span class="comment"> * 处理I/O任务</span></span><br><span class="line"><span class="comment"> * 执行回调，返回给上层</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">eventLoop:<span class="function"><span class="keyword">function</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">    <span class="comment">// 如果队列不为空，就继续循环</span></span><br><span class="line">    <span class="keyword">while</span>(<span class="keyword">this</span>.globalEventQueue.length &gt; <span class="number">0</span>)&#123;</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// 从队列的头部拿出一个事件</span></span><br><span class="line">        <span class="keyword">var</span> event = <span class="keyword">this</span>.globalEventQueue.shift();</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// 如果是耗时任务</span></span><br><span class="line">        <span class="keyword">if</span>(isIOTask(event))&#123;</span><br><span class="line">            <span class="comment">// 从线程池里拿出一个线程</span></span><br><span class="line">            <span class="keyword">var</span> thread = getThreadFromThreadPool();</span><br><span class="line">            <span class="comment">// 交给线程处理</span></span><br><span class="line">            thread.handleIOTask(event)</span><br><span class="line">        &#125;<span class="keyword">else</span> &#123;</span><br><span class="line">            <span class="comment">// 非耗时任务处理后，直接返回结果</span></span><br><span class="line">            <span class="keyword">var</span> result = handleEvent(event);</span><br><span class="line">            <span class="comment">// 最终通过回调函数返回给V8，再由V8返回给应用程序</span></span><br><span class="line">            event.callback.call(<span class="literal">null</span>,result);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>主线程不停的检测事件队列，对于 I/O 任务，就交给线程池来处理，非 I/O 任务就自己处理并返回。</p>
+<h5 id="【4】处理-I-O-任务"><a href="#【4】处理-I-O-任务" class="headerlink" title="【4】处理 I/O 任务"></a>【4】处理 I/O 任务</h5><p>线程池接到任务以后，直接处理I/O操作，比如读取数据库：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 处理I/O任务</span></span><br><span class="line"><span class="comment"> * 完成后将事件添加到队列尾部</span></span><br><span class="line"><span class="comment"> * 释放线程</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">handleIOTask:<span class="function"><span class="keyword">function</span>(<span class="params">event</span>)</span>&#123;</span><br><span class="line">    <span class="comment">//当前线程</span></span><br><span class="line">    <span class="keyword">var</span> curThread = <span class="keyword">this</span>;</span><br><span class="line"> </span><br><span class="line">    <span class="comment">// 操作数据库</span></span><br><span class="line">    <span class="keyword">var</span> optDatabase = <span class="function"><span class="keyword">function</span>(<span class="params">params,callback</span>)</span>&#123;</span><br><span class="line">        <span class="keyword">var</span> result = readDataFromDb(params);</span><br><span class="line">        callback.call(<span class="literal">null</span>,result)</span><br><span class="line">    &#125;;</span><br><span class="line">     </span><br><span class="line">    <span class="comment">// 执行I/O任务</span></span><br><span class="line">    optDatabase(event.params,<span class="function"><span class="keyword">function</span>(<span class="params">result</span>)</span>&#123;</span><br><span class="line">        <span class="comment">// 返回结果存入事件对象中</span></span><br><span class="line">        event.result = result;</span><br><span class="line"> </span><br><span class="line">        <span class="comment">// I/O完成后，将不再是耗时任务</span></span><br><span class="line">        event.isIOTask = <span class="literal">false</span>;</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// 将该事件重新添加到队列的尾部</span></span><br><span class="line">        <span class="keyword">this</span>.globalEventQueue.push(event);</span><br><span class="line">         </span><br><span class="line">        <span class="comment">// 释放当前线程</span></span><br><span class="line">        releaseThread(curThread)</span><br><span class="line">    &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>当 I/O 任务完成以后就执行回调，把请求结果存入事件中，并将该事件重新放入队列中，等待循环，最后释放当前线程，当主线程再次循环到该事件时，就直接处理了。</p>
+<h4 id="缺陷"><a href="#缺陷" class="headerlink" title="缺陷"></a>缺陷</h4><p>Node.js通过事件驱动模型实现了高并发和异步 I/O，然而也有 Node.js 不擅长做的事情：<br>上面提到，如果是 I/O 任务，Node.js 就把任务交给线程池来异步处理，高效简单，因此 Node.js 适合处理I/O密集型任务。<br>但不是所有的任务都是I/O密集型任务，当碰到CPU密集型任务时，即只用CPU计算的操作，比如要对数据加解密、数据压缩和解压，这时Node.js就会亲自处理，一个一个的计算，前面的任务没有执行完，后面的任务就只能干等着。<br>在事件队列中，如果前面的CPU计算任务没有完成，后面的任务就会被阻塞，出现响应缓慢的情况，如果操作系统本身就是单核，那也就算了，但现在大部分服务器都是多CPU或多核的，而Node.js只有一个Event Loop，也就是只占用一个CPU内核，当Node.js被CPU密集型任务占用，导致其他任务被阻塞时，却还有CPU内核处于闲置状态，造成资源浪费。<br><strong>因此，Node.js 并不适合 CPU 密集型任务。</strong></p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><ul>
+<li>Nodejs实际上只是应用程序层面JavaScript单线程执行，真正I/O操作、网络请求、底层API调用都是多线程执行。</li>
+<li>事件循环是Node异步I/O实现的核心，Node通过事件驱动的方式处理请求，使得其无须为每个请求创建额外的线程，省掉了创建和销毁线程的开销。同时也因为线程数较少，不受线程上下文切换的影响，维持了Node的高性能。</li>
+<li>Nodejs具备单线程执行应用程序、异步非阻塞I/O的特点，因此适用于I/O密集型场景，而并不擅长于CPU计算密集型场景。</li>
+</ul>
+<h4 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h4><p><a href="https://segmentfault.com/a/1190000012925872" target="_blank" rel="noopener">从浏览器多进程到JS单线程，JS运行机制最全面的一次梳理</a><br><a href="https://my.oschina.net/zhangjiawen/blog/1551020?from=timeline&amp;isappinstalled=0" target="_blank" rel="noopener">单线程NodeJS的异步I/O</a><br><a href="https://blog.csdn.net/pengpengrose0406/article/details/46964595" target="_blank" rel="noopener">[读书笔记]深入浅出NodeJS——Node中的异步I/O</a><br><a href="https://www.cnblogs.com/onepixel/p/7143769.html" target="_blank" rel="noopener">Node.js 事件循环机制</a><br><a href="https://juejin.im/post/5ab367acf265da23a049783e" target="_blank" rel="noopener">JS/NodeJS中的异步任务与事件环</a><br><a href="https://github.com/zhaoluting/asynchronous/blob/master/深入浅出Node.js.pdf" target="_blank" rel="noopener">深入浅出node.js</a>   </p>
+
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/node/" rel="tag"># node</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/08/database/" rel="next" title="面向前端的数据库指南">
+                <i class="fa fa-chevron-left"></i> 面向前端的数据库指南
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/06/27/slefTest/" rel="prev" title="如何提高前端的自测能力">
+                如何提高前端的自测能力 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+  </div>
+
+
+          </div>
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image" src="/images/global/favicon-32x32-next.png" alt="zhaoluting">
+            
+              <p class="site-author-name" itemprop="name">zhaoluting</p>
+              <p class="site-description motion-element" itemprop="description">前端小开发</p>
+          </div>
+
+          
+            <nav class="site-state motion-element">
+              
+                <div class="site-state-item site-state-posts">
+                
+                  <a href="/archives/">
+                
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">日志</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-categories">
+                  <a href="/categories/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">6</span>
+                    <span class="site-state-item-name">分类</span>
+                  </a>
+                </div>
+              
+
+              
+                
+                
+                <div class="site-state-item site-state-tags">
+                  <a href="/tags/index.html">
+                    
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                      
+                    
+                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-name">标签</span>
+                  </a>
+                </div>
+              
+            </nav>
+          
+
+          
+
+          
+            <div class="links-of-author motion-element">
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/zhaoluting" target="_blank" title="GitHub"><i class="fa fa-fw fa-github"></i>GitHub</a>
+                  
+                </span>
+              
+                <span class="links-of-author-item">
+                  <a href="mailto:839327424@qq.com" target="_blank" title="E-Mail"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+                  
+                </span>
+              
+            </div>
+          
+
+          
+          
+
+          
+          
+
+          
+            
+          
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#概念理解"><span class="nav-number">1.</span> <span class="nav-text">概念理解</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是I-O"><span class="nav-number">1.1.</span> <span class="nav-text">什么是I/O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#同步与异步I-O"><span class="nav-number">1.2.</span> <span class="nav-text">同步与异步I/O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#阻塞与非阻塞I-O"><span class="nav-number">1.3.</span> <span class="nav-text">阻塞与非阻塞I/O</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举个🌰"><span class="nav-number">1.4.</span> <span class="nav-text">举个🌰</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Node-js与异步"><span class="nav-number">2.</span> <span class="nav-text">Node.js与异步</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Node为什么要选择异步？"><span class="nav-number">2.1.</span> <span class="nav-text">Node为什么要选择异步？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1、前提条件：JavaScript是单线程的"><span class="nav-number">2.1.1.</span> <span class="nav-text">1、前提条件：JavaScript是单线程的</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2、从用户体验角度讲，异步I-O可以消除UI阻塞，快速响应资源"><span class="nav-number">2.1.2.</span> <span class="nav-text">2、从用户体验角度讲，异步I/O可以消除UI阻塞，快速响应资源</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3、从资源分配角度讲，异步I-O可以让单线程远离阻塞，以更好地利用CPU"><span class="nav-number">2.1.3.</span> <span class="nav-text">3、从资源分配角度讲，异步I/O可以让单线程远离阻塞，以更好地利用CPU</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Node如何实现异步I-O？"><span class="nav-number">2.2.</span> <span class="nav-text">Node如何实现异步I/O？</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#名词解析"><span class="nav-number">2.2.1.</span> <span class="nav-text">名词解析</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#代码模拟"><span class="nav-number">2.2.2.</span> <span class="nav-text">代码模拟</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#【1】定义事件队列"><span class="nav-number">2.2.2.1.</span> <span class="nav-text">【1】定义事件队列</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#【2】定义接收请求入口"><span class="nav-number">2.2.2.2.</span> <span class="nav-text">【2】定义接收请求入口</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#【3】定义-Event-Loop"><span class="nav-number">2.2.2.3.</span> <span class="nav-text">【3】定义 Event Loop</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#【4】处理-I-O-任务"><span class="nav-number">2.2.2.4.</span> <span class="nav-text">【4】处理 I/O 任务</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#缺陷"><span class="nav-number">2.2.3.</span> <span class="nav-text">缺陷</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">2.3.</span> <span class="nav-text">总结</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#参考文档"><span class="nav-number">2.3.1.</span> <span class="nav-text">参考文档</span></a></li></ol></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright"> &copy; 2017 – <span itemprop="copyrightYear">2018</span>
+  <span class="with-love" id="animate">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">zhaoluting</span>
+
+  
+
+  
+</div>
+
+
+
+
+
+
+
+
+
+
+
+        
+
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+          <span id="scrollpercent"><span>0</span>%</span>
+        
+      </div>
+    
+
+    
+	
+    
+
+    
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=6.4.2"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=6.4.2"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=6.4.2"></script>
+
+
+
+  
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  <style>
+    .copy-btn {
+      display: inline-block;
+      padding: 6px 12px;
+      font-size: 13px;
+      font-weight: 700;
+      line-height: 20px;
+      color: #333;
+      white-space: nowrap;
+      vertical-align: middle;
+      cursor: pointer;
+      background-color: #eee;
+      background-image: linear-gradient(#fcfcfc, #eee);
+      border: 1px solid #d5d5d5;
+      border-radius: 3px;
+      user-select: none;
+      outline: 0;
+    }
+
+    .highlight-wrap .copy-btn {
+      transition: opacity .3s ease-in-out;
+      opacity: 0;
+      padding: 2px 6px;
+      position: absolute;
+      right: 4px;
+      top: 8px;
+    }
+
+    .highlight-wrap:hover .copy-btn,
+    .highlight-wrap .copy-btn:focus {
+      opacity: 1
+    }
+
+    .highlight-wrap {
+      position: relative;
+    }
+  </style>
+  <script>
+    $('.highlight').each(function (i, e) {
+      var $wrap = $('<div>').addClass('highlight-wrap')
+      $(e).after($wrap)
+      $wrap.append($('<button>').addClass('copy-btn').append('复制').on('click', function (e) {
+        var code = $(this).parent().find('.code').find('.line').map(function (i, e) {
+          return $(e).text()
+        }).toArray().join('\n')
+        var ta = document.createElement('textarea')
+        document.body.appendChild(ta)
+        ta.style.position = 'absolute'
+        ta.style.top = '0px'
+        ta.style.left = '0px'
+        ta.value = code
+        ta.select()
+        ta.focus()
+        var result = document.execCommand('copy')
+        document.body.removeChild(ta)
+        
+          if(result)$(this).text('复制成功')
+          else $(this).text('复制失败')
+        
+        $(this).blur()
+      })).on('mouseleave', function (e) {
+        var $b = $(this).find('.copy-btn')
+        setTimeout(function () {
+          $b.text('复制')
+        }, 300)
+      }).append(e)
+    })
+  </script>
+
+
+</body>
+</html>
