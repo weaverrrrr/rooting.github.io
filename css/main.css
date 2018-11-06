@@ -889,7 +889,6 @@ pre .javascript .function {
 .post-body .label {
   display: inline;
   padding: 0 2px;
-  white-space: nowrap;
 }
 .post-body .label.default {
   background-color: #f0f0f0;
@@ -1888,7 +1887,7 @@ pre .javascript .function {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #1aa72b;
+  background: #d57121;
 }
 .links-of-blogroll {
   font-size: 13px;
@@ -2669,9 +2668,6 @@ embed {
 .headband {
   background: #926f5a;
 }
-.site-meta {
-  float: none;
-}
 .brand {
   background: rgba(208,142,101,0.8);
 }
@@ -2692,6 +2688,7 @@ embed {
 .site-meta {
   margin-left: 0px;
   text-align: center;
+  float: none;
 }
 .site-meta .site-title {
   font-size: 35px;
@@ -2709,18 +2706,6 @@ embed {
   text-align: center;
   color: #a88772;
 }
-.site-author-name {
-  margin: 30px 0 0;
-  color: #fff;
-  font-family: 'Comic Sans MS', sans-serif;
-  font-size: 20px;
-}
-.site-author-image {
-  border: 2px solid #fff;
-  border-radius: 100%;
-  background-color: #fff;
-  transition: transform 1s ease-out;
-}
 img:hover {
   -webkit-transform: rotateZ(360deg);
   -moz-transform: rotateZ(360deg);
@@ -2728,67 +2713,96 @@ img:hover {
   -o-transform: rotateZ(360deg);
   transform: rotateZ(360deg);
 }
-.site-description {
-  color: #e4c8bf;
-}
-.links-of-blogroll {
-  font-size: 14px;
-  margin-bottom: 42px;
-}
-.links-of-author {
-  margin-top: 30px;
-  margin-bottom: 58px;
-}
-.sidebar-inner {
-  color: #649ab6;
-}
 .sidebar {
   background: #a88773;
   box-shadow: inset 0 2px 6px #724d38;
 }
-.sidebar a {
+.sidebar .sidebar-inner {
+  color: #e6c5b2;
+}
+.sidebar .sidebar-inner .site-author-image {
+  border: 2px solid #fff;
+  border-radius: 100%;
+  background-color: #fff;
+  transition: transform 1s ease-out;
+  margin-top: 20px;
+}
+.sidebar .sidebar-inner .site-author-name {
+  margin: 30px 0 0;
   color: #fff;
-  border-bottom-color: #649ab6;
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 20px;
+}
+.sidebar .sidebar-inner .site-description {
+  color: #e6c5b2;
+}
+.sidebar .sidebar-inner a {
+  color: #fff;
+  border-bottom-color: #e6c5b2;
   border-bottom: none;
 }
-.sidebar a:hover {
+.sidebar .sidebar-inner a:hover {
   color: #fff;
 }
-.site-state-item {
-  display: inline-block;
-  padding: 8px 28px;
-  border-left: 1px solid #649ab6;
-}
-.sidebar-nav .sidebar-nav-active {
+.sidebar .sidebar-inner .sidebar-nav .sidebar-nav-active {
   color: #fff;
   border-bottom-color: #fff;
 }
-.sidebar-nav li {
+.sidebar .sidebar-inner .sidebar-nav li {
   color: #e1c6b5;
 }
-.sidebar-nav li:hover {
+.sidebar .sidebar-inner .sidebar-nav li:hover {
+  color: #fff;
+}
+.sidebar .sidebar-inner .sidebar-nav .sidebar-nav-active:hover {
+  color: #fff;
+}
+.sidebar .sidebar-inner .site-state .site-state-item {
+  display: inline-block;
+  padding: 8px 28px;
+  border-left: 1px solid #e6c5b2;
+}
+.sidebar .sidebar-inner .links-of-blogroll {
+  font-size: 14px;
+  margin-bottom: 42px;
+}
+.sidebar .sidebar-inner .links-of-blogroll .links-of-blogroll-title {
+  font-family: 'Comic Sans MS', sans-serif;
+  font-size: 16px;
+  color: #fff;
+}
+.sidebar .sidebar-inner .links-of-blogroll .links-of-blogroll-list {
+  border-top: 1px dotted;
+  margin: 10px 20px;
+  line-height: 20px;
+  padding-top: 10px;
+}
+.sidebar .sidebar-inner .links-of-author {
+  margin-bottom: 70px;
+}
+.sidebar .sidebar-inner .links-of-author .links-of-author-item i {
+  margin-right: 3px;
+}
+.sidebar .sidebar-inner .post-toc .nav .active>a {
+  color: #fff;
+}
+.sidebar .sidebar-inner .post-toc ol a {
+  color: #e0c6b5;
+}
+.sidebar .sidebar-inner .post-toc ol a:hover {
   color: #fff;
 }
 .sidebar-toggle {
   background: #a88772;
 }
-.page-post-detail .sidebar-toggle-line {
+.sidebar-toggle .sidebar-toggle-line {
   background: #fff;
+}
+.site-nav-toggle .btn-bar {
+  background: #a88772;
 }
 .back-to-top {
   background: #a88772;
-}
-.post-toc .nav .active>a {
-  color: #fff;
-}
-.post-toc ol a {
-  color: #e0c6b5;
-}
-.post-toc ol a:hover {
-  color: #fff;
-}
-.sidebar-nav .sidebar-nav-active:hover {
-  color: #fff;
 }
 .post-type-normal .post-button {
   margin-top: 50px;
