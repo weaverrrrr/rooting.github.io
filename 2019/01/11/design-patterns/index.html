@@ -129,7 +129,7 @@
 <meta property="og:site_name" content="zhaoluting">
 <meta property="og:description" content="本文是我阅读《JavaScript设计模式与开发实践》过程中记录下来的笔记。之前以为设计模式是要到架构师那个境界才能真正用到的，看了这本书才发现，原来我们平时就一直在接触设计模式，自己也在无意识地用到了这些设计模式。理解了这些设计模式后，对日后的编码思路和代码优化也有很大的帮助，其中原型模式、策略模式、发布-订阅模式给我的印象是最深刻的。">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-11T14:16:15.035Z">
+<meta property="og:updated_time" content="2019-01-19T09:26:49.365Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="《JavaScript设计模式与开发实践》笔记">
 <meta name="twitter:description" content="本文是我阅读《JavaScript设计模式与开发实践》过程中记录下来的笔记。之前以为设计模式是要到架构师那个境界才能真正用到的，看了这本书才发现，原来我们平时就一直在接触设计模式，自己也在无意识地用到了这些设计模式。理解了这些设计模式后，对日后的编码思路和代码优化也有很大的帮助，其中原型模式、策略模式、发布-订阅模式给我的印象是最深刻的。">
@@ -399,13 +399,9 @@
                 
               
 
-              <time title="创建时间：2019-01-11 20:20:03 / 修改时间：22:16:15" itemprop="dateCreated datePublished" datetime="2019-01-11T20:20:03+08:00">2019-01-11</time>
+              <time title="创建时间：2019-01-11 20:20:03" itemprop="dateCreated datePublished" datetime="2019-01-11T20:20:03+08:00">2019-01-11</time>
             
 
-            
-              
-
-              
             
           </span>
 
@@ -439,6 +435,32 @@
           
 
           
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="本文字数">4k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">4 分钟</span>
+              
+            </div>
+          
 
           
 
@@ -455,7 +477,7 @@
       
 
       
-        <p>本文是我阅读<a href="https://book.douban.com/subject/26382780/" target="_blank" rel="noopener">《JavaScript设计模式与开发实践》</a>过程中记录下来的笔记。之前以为设计模式是要到架构师那个境界才能真正用到的，看了这本书才发现，原来我们平时就一直在接触设计模式，自己也在无意识地用到了这些设计模式。理解了这些设计模式后，对日后的编码思路和代码优化也有很大的帮助，其中原型模式、策略模式、发布-订阅模式给我的印象是最深刻的。</p>
+        <p>本文是我阅读<a href="https://book.douban.com/subject/26382780/" target="_blank" rel="noopener">《JavaScript设计模式与开发实践》</a>过程中记录下来的笔记。之前以为设计模式是要到架构师那个境界才能真正用到的，看了这本书才发现，原来我们平时就一直在接触设计模式，自己也在无意识地用到了这些设计模式。理解了这些设计模式后，对日后的编码思路和代码优化也有很大的帮助，其中<a href="/2019/01/11/design-patterns/#原型模式">原型模式</a>、<a href="/2019/01/11/design-patterns/#策略模式">策略模式</a>、<a href="/2019/01/11/design-patterns/#发布-订阅模式（观察者模式）">发布-订阅模式</a>给我的印象是最深刻的。</p>
 <a id="more"></a>
 <h2 id="小总结"><a href="#小总结" class="headerlink" title="小总结"></a>小总结</h2><ul>
 <li>JavaScript是一门基于原型的面向对象语言，它的对象系统是使用原型模式搭建的，没有类的概念，将函数作为一等对象。</li>
@@ -557,7 +579,7 @@
 <h3 id="行为型模式"><a href="#行为型模式" class="headerlink" title="行为型模式"></a><div style="color:#a88773">行为型模式</div></h3><h4 id="策略模式"><a href="#策略模式" class="headerlink" title="策略模式"></a>策略模式</h4><ul>
 <li><strong>定义</strong>：定义一系列算法，各自封装成策略类，对context发起请求时，context将请求委托给对应的策略类。</li>
 <li><strong>要点</strong>：将算法的使用(环境类context)和算法的实现(策略类)分离开来。</li>
-<li><strong>意义</strong>：++策略模式是对象多态的完美体现，高阶函数就是一种隐式的策略模式。策略模式已经融入到了JS语言本身中。++</li>
+<li><strong>意义</strong>：策略模式是对象多态的完美体现，高阶函数就是一种隐式的策略模式。策略模式已经融入到了JS语言本身中。</li>
 <li><strong>场景</strong>：游戏动效、验证表单等。</li>
 </ul>
 <h4 id="迭代器模式"><a href="#迭代器模式" class="headerlink" title="迭代器模式"></a>迭代器模式</h4><ul>
@@ -566,7 +588,7 @@
 <li><strong>意义</strong>：将迭代的过程从业务逻辑中分离出来，不用关心对象的内部构造。绝大部分语言都内置了迭代器。</li>
 <li><strong>场景</strong>：内部迭代器（内部已定义好迭代规则，外部不需要关心迭代器内部实现，外部仅需一次初始调用）；外部迭代器（必须显示地请求迭代下一个元素，可手动控制迭代的过程或顺序）</li>
 </ul>
-<h4 id="发布-订阅模式-观察者模式"><a href="#发布-订阅模式-观察者模式" class="headerlink" title="发布-订阅模式(观察者模式)"></a>发布-订阅模式(观察者模式)</h4><ul>
+<h4 id="发布-订阅模式（观察者模式）"><a href="#发布-订阅模式（观察者模式）" class="headerlink" title="发布-订阅模式（观察者模式）"></a>发布-订阅模式（观察者模式）</h4><ul>
 <li><strong>定义</strong>：当一个对象的状态发生变化时，所有依赖于它的对象都将得到通知。</li>
 <li><strong>要点</strong>：在JS中是用注册回调函数的形式来代替传统的发布订阅者模式。</li>
 <li><strong>意义</strong>：发布订阅者模式可以实现对时间及对象间的解耦。从架构上看，MVC和MVVM都少不了发布订阅者模式，而且JS本身也是一门基于事件驱动的语言。</li>
@@ -655,6 +677,10 @@
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/01/19/FE-technology/" rel="prev" title="《现代前端技术解析》笔记">
+                《现代前端技术解析》笔记 <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -725,7 +751,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -892,7 +918,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小总结"><span class="nav-number">1.</span> <span class="nav-text">小总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关概念"><span class="nav-number">2.</span> <span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#this、call和apply"><span class="nav-number">2.1.</span> <span class="nav-text">this、call和apply</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高阶函数"><span class="nav-number">2.2.</span> <span class="nav-text">高阶函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包"><span class="nav-number">2.3.</span> <span class="nav-text">闭包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的设计模式"><span class="nav-number">3.</span> <span class="nav-text">常用的设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建型模式"><span class="nav-number">3.1.</span> <span class="nav-text">创建型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原型模式"><span class="nav-number">3.1.1.</span> <span class="nav-text">原型模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单例模式"><span class="nav-number">3.1.2.</span> <span class="nav-text">单例模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构型模式"><span class="nav-number">3.2.</span> <span class="nav-text">结构型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代理模式"><span class="nav-number">3.2.1.</span> <span class="nav-text">代理模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组合模式"><span class="nav-number">3.2.2.</span> <span class="nav-text">组合模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#享元模式"><span class="nav-number">3.2.3.</span> <span class="nav-text">享元模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#装饰者模式"><span class="nav-number">3.2.4.</span> <span class="nav-text">装饰者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适配器模式"><span class="nav-number">3.2.5.</span> <span class="nav-text">适配器模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行为型模式"><span class="nav-number">3.3.</span> <span class="nav-text">行为型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#策略模式"><span class="nav-number">3.3.1.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器模式"><span class="nav-number">3.3.2.</span> <span class="nav-text">迭代器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发布-订阅模式-观察者模式"><span class="nav-number">3.3.3.</span> <span class="nav-text">发布-订阅模式(观察者模式)</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令模式"><span class="nav-number">3.3.4.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板方法模式"><span class="nav-number">3.3.5.</span> <span class="nav-text">模板方法模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#职责链模式"><span class="nav-number">3.3.6.</span> <span class="nav-text">职责链模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中介者模式"><span class="nav-number">3.3.7.</span> <span class="nav-text">中介者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#状态模式"><span class="nav-number">3.3.8.</span> <span class="nav-text">状态模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码重构技巧"><span class="nav-number">4.</span> <span class="nav-text">代码重构技巧</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#小总结"><span class="nav-number">1.</span> <span class="nav-text">小总结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#相关概念"><span class="nav-number">2.</span> <span class="nav-text">相关概念</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#this、call和apply"><span class="nav-number">2.1.</span> <span class="nav-text">this、call和apply</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#高阶函数"><span class="nav-number">2.2.</span> <span class="nav-text">高阶函数</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#闭包"><span class="nav-number">2.3.</span> <span class="nav-text">闭包</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常用的设计模式"><span class="nav-number">3.</span> <span class="nav-text">常用的设计模式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#创建型模式"><span class="nav-number">3.1.</span> <span class="nav-text">创建型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#原型模式"><span class="nav-number">3.1.1.</span> <span class="nav-text">原型模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#单例模式"><span class="nav-number">3.1.2.</span> <span class="nav-text">单例模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#结构型模式"><span class="nav-number">3.2.</span> <span class="nav-text">结构型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#代理模式"><span class="nav-number">3.2.1.</span> <span class="nav-text">代理模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#组合模式"><span class="nav-number">3.2.2.</span> <span class="nav-text">组合模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#享元模式"><span class="nav-number">3.2.3.</span> <span class="nav-text">享元模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#装饰者模式"><span class="nav-number">3.2.4.</span> <span class="nav-text">装饰者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#适配器模式"><span class="nav-number">3.2.5.</span> <span class="nav-text">适配器模式</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#行为型模式"><span class="nav-number">3.3.</span> <span class="nav-text">行为型模式</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#策略模式"><span class="nav-number">3.3.1.</span> <span class="nav-text">策略模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#迭代器模式"><span class="nav-number">3.3.2.</span> <span class="nav-text">迭代器模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#发布-订阅模式（观察者模式）"><span class="nav-number">3.3.3.</span> <span class="nav-text">发布-订阅模式（观察者模式）</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#命令模式"><span class="nav-number">3.3.4.</span> <span class="nav-text">命令模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#模板方法模式"><span class="nav-number">3.3.5.</span> <span class="nav-text">模板方法模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#职责链模式"><span class="nav-number">3.3.6.</span> <span class="nav-text">职责链模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#中介者模式"><span class="nav-number">3.3.7.</span> <span class="nav-text">中介者模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#状态模式"><span class="nav-number">3.3.8.</span> <span class="nav-text">状态模式</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代码重构技巧"><span class="nav-number">4.</span> <span class="nav-text">代码重构技巧</span></a></li></ol></div>
             
 
           </div>
@@ -919,7 +945,21 @@
   <span class="author" itemprop="copyrightHolder">zhaoluting</span>
 
   
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    
+    <span title="站点总字数">98k</span>
+  
 
+  
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-coffee"></i>
+    </span>
+    
+    <span title="站点阅读时长">1:29</span>
   
 </div>
 
