@@ -121,23 +121,25 @@
 
 
 
-  <meta name="description" content="前端小开发">
-<meta property="og:type" content="website">
-<meta property="og:title" content="zhaoluting">
-<meta property="og:url" content="https://zhaoluting.github.io/archives/2017/index.html">
+  <meta name="description" content="问题场景：  新建a.js 文件并使用git提交到远程仓库，再将本地 a.js 更名为 A.js，git却无法识别也无法提交。 两人本地存储的是同名不同大小写的文件，导致代码拉取时出现各种问题。 在macOS/windows上解压linux的程序时，同名但大小写不同的文件会互相覆盖。 一个全小写的文件名，将其引入时路径中的该文件名首字母写成了大写，本地编译时不会报错，但到线上部署时就会构建失败。">
+<meta name="keywords" content="tool">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于大小写不敏感的坑">
+<meta property="og:url" content="https://zhaoluting.github.io/2019/04/19/caseSensitive/index.html">
 <meta property="og:site_name" content="zhaoluting">
-<meta property="og:description" content="前端小开发">
+<meta property="og:description" content="问题场景：  新建a.js 文件并使用git提交到远程仓库，再将本地 a.js 更名为 A.js，git却无法识别也无法提交。 两人本地存储的是同名不同大小写的文件，导致代码拉取时出现各种问题。 在macOS/windows上解压linux的程序时，同名但大小写不同的文件会互相覆盖。 一个全小写的文件名，将其引入时路径中的该文件名首字母写成了大写，本地编译时不会报错，但到线上部署时就会构建失败。">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:updated_time" content="2019-10-23T10:02:12.155Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="zhaoluting">
-<meta name="twitter:description" content="前端小开发">
+<meta name="twitter:title" content="关于大小写不敏感的坑">
+<meta name="twitter:description" content="问题场景：  新建a.js 文件并使用git提交到远程仓库，再将本地 a.js 更名为 A.js，git却无法识别也无法提交。 两人本地存储的是同名不同大小写的文件，导致代码拉取时出现各种问题。 在macOS/windows上解压linux的程序时，同名但大小写不同的文件会互相覆盖。 一个全小写的文件名，将其引入时路径中的该文件名首字母写成了大写，本地编译时不会报错，但到线上部署时就会构建失败。">
 
 
 
 
 
 
-  <link rel="canonical" href="https://zhaoluting.github.io/archives/2017/">
+  <link rel="canonical" href="https://zhaoluting.github.io/2019/04/19/caseSensitive/">
 
 
 
@@ -147,7 +149,7 @@
   };
 </script>
 
-  <title>归档 | zhaoluting</title>
+  <title>关于大小写不敏感的坑 | zhaoluting</title>
   
 
 
@@ -196,7 +198,7 @@
     
   
 
-  <div class="container sidebar-position-left page-archive">
+  <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
@@ -265,7 +267,7 @@
         
         
           
-          <li class="menu-item menu-item-archives menu-item-active">
+          <li class="menu-item menu-item-archives">
     <a href="/archives/" rel="section">
       <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>归档</a>
   </li>
@@ -293,31 +295,6 @@
 
   
     
-
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
 
   
 
@@ -364,148 +341,253 @@
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block archive">
-    <div id="posts" class="posts-collapse">
-      <span class="archive-move-on"></span>
+  <div id="posts" class="posts-expand">
+    
 
-      
-      <span class="archive-page-counter">
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2019/04/19/caseSensitive/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+      <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+
+    
+      <header class="post-header">
+
         
         
+          <h1 class="post-title" itemprop="name headline">关于大小写不敏感的坑
+              
+            
+          </h1>
         
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-04-19 17:30:45" itemprop="dateCreated datePublished" datetime="2019-04-19T17:30:45+08:00">2019-04-19</time>
+            
+
+            
+          </span>
+
           
-        
-        嗯..! 目前共计 17 篇日志。 继续努力。
-      </span>
-      
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/规范/" itemprop="url" rel="index"><span itemprop="name">规范</span></a></span>
 
-      
-
-        
-        
-        
-
-        
+                
+                
+              
+            </span>
           
-          <div class="collection-title">
-            <h1 class="archive-year" id="archive-year-2017">2017</h1>
-          </div>
-        
-        
 
-        
+          
+            
+          
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
+          
+          
 
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/11/01/swaggerStandard/" itemprop="url">
+          
+
+          
+            <div class="post-symbolscount">
               
-                <span itemprop="name">swagger文档规范</span>
+                <span class="post-meta-divider">|</span>
               
-            </a>
-        
-      </h2>
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-11-01T16:53:46+08:00" content="2017-11-01">
-          11-01
-        </time>
-      </div>
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="本文字数">1.6k</span>
+              
 
-    </header>
-  </article>
+              
+                <span class="post-meta-divider">|</span>
+              
 
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">1 分钟</span>
+              
+            </div>
+          
 
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/10/12/devTool/" itemprop="url">
-              
-                <span itemprop="name">chrome调试指南</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-10-12T00:00:00+08:00" content="2017-10-12">
-          10-12
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
-
       
 
-        
-        
-        
-
-        
-        
-
-        
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      <h2 class="post-title">
-        
-            <a class="post-title-link" href="/2017/06/15/hello-world/" itemprop="url">
-              
-                <span itemprop="name">Hello World</span>
-              
-            </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2017-06-15T00:00:00+08:00" content="2017-06-15">
-          06-15
-        </time>
-      </div>
-
-    </header>
-  </article>
-
-
+      
+        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p><strong>场景：</strong></p>
+<ul>
+<li>新建a.js 文件并使用git提交到远程仓库，再将本地 a.js 更名为 A.js，git却无法识别也无法提交。</li>
+<li><a href="http://www.chengpengfei.com/2018/01/23/" target="_blank" rel="noopener">两人本地存储的是同名不同大小写的文件，导致代码拉取时出现各种问题。</a></li>
+<li>在macOS/windows上解压linux的程序时，同名但大小写不同的文件会互相覆盖。</li>
+<li>一个全小写的文件名，将其引入时路径中的该文件名首字母写成了大写，本地编译时不会报错，但到线上部署时就会构建失败。</li>
+</ul>
+<p><strong>原因：</strong>一般开发使用的macOS/windows系统都是默认不区分文件名大小写的，而用来部署的服务器通常都是使用文件名大小写不敏感的Linux系统。git 为了兼容Windows和MacOS，也是默认不区分文件名大小写的。</p>
+<a id="more"></a>
+<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><h3 id="修改系统配置"><a href="#修改系统配置" class="headerlink" title="修改系统配置"></a>修改系统配置</h3><p><a href="https://zhuanlan.zhihu.com/p/35908178" target="_blank" rel="noopener">《在 macOS 中完美配置文件名大小写敏感》</a>这篇文章中提到了两种修改系统配置的方法：</p>
+<ul>
+<li>将macOS 默认『Mac OS 扩展（日志式）』格式的磁盘改成『 Mac OS 扩展（区分大小写，日志式）』。</li>
+<li>添加新的大小写敏感的 APFS 卷宗。</li>
+</ul>
+<p>但这两种方法都不适用于团队，且会导致一些软件无法使用，所以这两种方法还是不要考虑了。</p>
+<h3 id="关于git"><a href="#关于git" class="headerlink" title="关于git"></a>关于git</h3><p><strong>git配置方法：</strong></p>
+<ul>
+<li>全局设置大小写敏感：<code>git config --global core.ignorecase false</code></li>
+<li>单个项目设置大小写敏感：<code>git config core.ignorecase false</code></li>
+</ul>
+<p><strong>但git config core.ignorecase false也有坑</strong>：</p>
+<p>假设甲和乙都在有a.js文件的『分支1』下开发，而丙在更名为A.js的『分支2』下开发且设置了<code>git config core.ignorecase false</code>，当丙在『分支2』下merge『分支1』时，会提示文件将被重写。</p>
+<p><strong>所以当多人协作开发时更推荐进行如下操作：</strong></p>
+<blockquote>
+<p>使用git mv 命令时，会自动执行git add。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git mv -f [要删掉的文件名] [要留下的文件名]</span><br><span class="line">git commit -m <span class="string">"改名"</span></span><br></pre></td></tr></table></figure>
+<p>当已造成了本地一个文件、远程两个同名但大小写不同的文件时，使用此方法也可解决问题。</p>
+<p>参考文章：<a href="https://blog.walterlv.com/post/case-insensitive-in-git-rename.html" target="_blank" rel="noopener">解决 Git 重命名时遇到的大小写不敏感的问题</a></p>
+<h3 id="webpack插件配置"><a href="#webpack插件配置" class="headerlink" title="webpack插件配置"></a>webpack插件配置</h3><p>通过Webpack插件<strong>case-sensitive-paths-webpack-plugin</strong>来强制区分引入文件的路径大小写，在本地编译时就能及时发现问题，杜绝第四个问题场景的出现。</p>
+<p>npm地址：<a href="https://www.npmjs.com/package/case-sensitive-paths-webpack-plugin" target="_blank" rel="noopener">https://www.npmjs.com/package/case-sensitive-paths-webpack-plugin</a></p>
+<p><strong>第一步：安装</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install --save-dev <span class="keyword">case</span>-sensitive-paths-webpack-plugin</span><br></pre></td></tr></table></figure>
+<p><strong>第二步：配置</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> CaseSensitivePathsPlugin = <span class="built_in">require</span>(<span class="string">'case-sensitive-paths-webpack-plugin'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> webpackConfig = &#123;</span><br><span class="line">    plugins: [</span><br><span class="line">      	<span class="comment">// 若想调试可用new CaseSensitivePathsPlugin(&#123;debug: true&#125;)</span></span><br><span class="line">        <span class="keyword">new</span> CaseSensitivePathsPlugin()</span><br><span class="line">        <span class="comment">// 其他插件 ...</span></span><br><span class="line">    ]</span><br><span class="line">    <span class="comment">// 其他webpack配置项 ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>为了避免大小写引来的各种问题，个人比较建议：</p>
+<ul>
+<li>制定文件命名规范，统一为小驼峰式。</li>
+<li>统一安装case-sensitive-paths-webpack-plugin插件。</li>
+<li>若想修改已提交的文件名称大小写，务必使用<code>git mv -f [要删掉的文件名] [要留下的文件名]</code>。</li>
+</ul>
 
       
-
     </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/tool/" rel="tag"># tool</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/04/19/logLevel/" rel="next" title="logLevel">
+                <i class="fa fa-chevron-left"></i> logLevel
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/04/19/commit/" rel="prev" title="commit辅助工具">
+                commit辅助工具 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -526,8 +608,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -698,6 +789,22 @@
       </section>
 
       
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">2.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#修改系统配置"><span class="nav-number">2.1.</span> <span class="nav-text">修改系统配置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#关于git"><span class="nav-number">2.2.</span> <span class="nav-text">关于git</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#webpack插件配置"><span class="nav-number">2.3.</span> <span class="nav-text">webpack插件配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#总结"><span class="nav-number">3.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
 
       
 
@@ -844,6 +951,10 @@
   
 
   
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=6.4.2"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=6.4.2"></script>
+
+
 
   
 
