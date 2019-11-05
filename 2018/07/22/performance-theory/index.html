@@ -15,7 +15,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -135,7 +135,7 @@
 <meta property="og:image" content="https://zhaoluting.github.io/image/performance-theory/tool-frames.png">
 <meta property="og:image" content="https://zhaoluting.github.io/image/performance-theory/tool-cpu.png">
 <meta property="og:image" content="https://zhaoluting.github.io/image/performance-theory/tool-main.png">
-<meta property="og:updated_time" content="2018-11-01T07:40:20.730Z">
+<meta property="og:updated_time" content="2019-11-02T11:52:40.567Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="性能优化专题-理论篇">
 <meta name="twitter:description" content="Fast is better than slow.   – Ten things we know to be true">
@@ -198,7 +198,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -208,7 +208,7 @@
   <div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -359,20 +359,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/07/22/performance-theory/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhaoluting">
       <meta itemprop="description" content="前端小开发">
       <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="zhaoluting">
     </span>
 
@@ -424,7 +424,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/性能优化/" itemprop="url" rel="index"><span itemprop="name">性能优化</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
 
                 
                 
@@ -537,13 +537,13 @@ table th:first-of-type {
 </tbody>
 </table>
 <p>Google团队提出了RAIL模型作为优化的目标。 Google把交互的过程分成4个独立的模块，称为 RAIL。RAIL 是一种以用户为中心的性能模型。每个网络应用均具有与其生命周期有关的四个不同方面，且这些方面以不同的方式影响着性能：response （响应）、 animation（动画）、idle（浏览器空置状态）和 load（加载）。<br><img src="/image/performance-theory/RAIL.png" alt="RAIL"></p>
-<h2 id="RAIL模型"><a href="#RAIL模型" class="headerlink" title="RAIL模型"></a>RAIL模型</h2><h3 id=""><a href="#" class="headerlink" title=""></a><span class="label info">response响应 – 在100ms内响应</span></h3><p>在用户注意到滞后之前您有 100 毫秒的时间可以响应用户输入。这适用于大多数输入，不管他们是在点击按钮、切换表单控件还是启动动画。但不适用于触摸拖动或滚动。</p>
+<h2 id="RAIL模型"><a href="#RAIL模型" class="headerlink" title="RAIL模型"></a>RAIL模型</h2><h3 id><a href="#" class="headerlink" title></a><span class="label info">response响应 – 在100ms内响应</span></h3><p>在用户注意到滞后之前您有 100 毫秒的时间可以响应用户输入。这适用于大多数输入，不管他们是在点击按钮、切换表单控件还是启动动画。但不适用于触摸拖动或滚动。</p>
 <p><strong>要得到响应式的回应，我们需要：</strong></p>
 <ul>
 <li>输入延迟时间（从按下到绘制）小于 100 毫秒。</li>
 <li>如果最终结果需要花长时间才能得到，就要给一个“加载”的标识来告诉用户“还在处理中”。</li>
 </ul>
-<h3 id="-1"><a href="#-1" class="headerlink" title=""></a><span class="label info">Animation动画 – 在10ms内生成一帧</span></h3><p>在数学上来说，人眼感受到的帧数为60帧/s，则会认为是流畅的动画（1s/60 = 1000ms/60 = 16ms/帧）；也就是说加上每一帧的预算是16ms，减去浏览器绘制帧的时间，留给我们的大约只有10ms/帧。 如果超过这个时间，用户眼中动画的流畅度就会降低。动画包含了以下概念:</p>
+<h3 id="-1"><a href="#-1" class="headerlink" title></a><span class="label info">Animation动画 – 在10ms内生成一帧</span></h3><p>在数学上来说，人眼感受到的帧数为60帧/s，则会认为是流畅的动画（1s/60 = 1000ms/60 = 16ms/帧）；也就是说加上每一帧的预算是16ms，减去浏览器绘制帧的时间，留给我们的大约只有10ms/帧。 如果超过这个时间，用户眼中动画的流畅度就会降低。动画包含了以下概念:</p>
 <ul>
 <li>视觉动画 ：这个包括了动画的开始和退出，状态改变时的动画，还有加载标识。 </li>
 <li>滚动 ：当用户开始滚动页面，页面出现猛动的情况。 </li>
@@ -553,13 +553,13 @@ table th:first-of-type {
 <ul>
 <li>每个帧的工作（从 JS 到绘制）完成时间小于 16 毫秒。 </li>
 </ul>
-<h3 id="-2"><a href="#-2" class="headerlink" title=""></a><span class="label info">IDLE 空闲 – 利用空闲的时间完成推迟的工作</span></h3><p><strong>要合理地应用浏览器空闲时间，我们需要：</strong></p>
+<h3 id="-2"><a href="#-2" class="headerlink" title></a><span class="label info">IDLE 空闲 – 利用空闲的时间完成推迟的工作</span></h3><p><strong>要合理地应用浏览器空闲时间，我们需要：</strong></p>
 <ul>
 <li>尽可能减少预加载数据，以便您的应用快速加载。不是需要立刻传达给用户的，所以可以在浏览器空闲的时候再处理这些任务。</li>
 <li>推迟的工作应分成每个耗时约 50 毫秒的多个块，因为应用应在 100 毫秒内给出响应。</li>
 <li>如果用户开始交互，优先级最高的事项是响应用户。</li>
 </ul>
-<h3 id="-3"><a href="#-3" class="headerlink" title=""></a><span class="label info">LOAD 加载 – 在1000ms内呈现内容</span></h3><p><strong>页面加载时间是最常见的性能话题。 要尽快将页面加载出来，我们需要：</strong></p>
+<h3 id="-3"><a href="#-3" class="headerlink" title></a><span class="label info">LOAD 加载 – 在1000ms内呈现内容</span></h3><p><strong>页面加载时间是最常见的性能话题。 要尽快将页面加载出来，我们需要：</strong></p>
 <ul>
 <li>把最需要传达的、对用户来说最有意义的内容在 1000ms 内渲染出来。</li>
 <li>要持续响应用户，绝对不允许出现在滚动页面、轻触或者看动画的时候卡顿。</li>
@@ -567,30 +567,30 @@ table th:first-of-type {
 </ul>
 <hr>
 <h1 id="相关原理"><a href="#相关原理" class="headerlink" title="相关原理"></a>相关原理</h1><h2 id="浏览器渲染进程"><a href="#浏览器渲染进程" class="headerlink" title="浏览器渲染进程"></a>浏览器渲染进程</h2><p>要想知道网页会卡顿在哪个阶段、哪些阶段可以进行性能优化，那么必须要对浏览器的渲染流程有个大体的了解。废话不多说，直接进入正题。</p>
-<h3 id="浏览器的渲染进程是多线程的"><a href="#浏览器的渲染进程是多线程的" class="headerlink" title="浏览器的渲染进程是多线程的"></a>浏览器的渲染进程是多线程的</h3><h4 id="-4"><a href="#-4" class="headerlink" title=""></a><span class="label info">GUI渲染线程</span></h4><ul>
+<h3 id="浏览器的渲染进程是多线程的"><a href="#浏览器的渲染进程是多线程的" class="headerlink" title="浏览器的渲染进程是多线程的"></a>浏览器的渲染进程是多线程的</h3><h4 id="-4"><a href="#-4" class="headerlink" title></a><span class="label info">GUI渲染线程</span></h4><ul>
 <li>负责渲染浏览器界面，解析HTML，CSS，构建DOM树和RenderObject树，布局和绘制等。</li>
 <li>当界面需要重绘（Repaint）或由于某种操作引发回流(reflow)时，该线程就会执行。</li>
 <li>注意，<strong>GUI渲染线程与JS引擎线程是互斥的</strong>，当JS引擎执行时GUI线程会被挂起（相当于被冻结了），GUI更新会被保存在一个队列中 <strong>等到JS引擎空闲时</strong>立即被执行。</li>
 </ul>
-<h4 id="-5"><a href="#-5" class="headerlink" title=""></a><span class="label info">JS引擎线程</span></h4><ul>
+<h4 id="-5"><a href="#-5" class="headerlink" title></a><span class="label info">JS引擎线程</span></h4><ul>
 <li>也称为JS内核，负责处理Javascript脚本程序，例如V8引擎。</li>
 <li>JS引擎线程负责解析Javascript脚本，运行代码。</li>
 <li>JS引擎一直等待着任务队列中任务的到来，然后加以处理，一个Tab页（renderer进程）中无论什么时候都只有一个JS线程在运行JS程序。</li>
 <li>同样注意，<strong>GUI渲染线程与JS引擎线程是互斥的</strong>，所以如果JS执行的时间过长，这样就会造成页面的渲染不连贯，导致页面渲染加载阻塞。</li>
 </ul>
-<h4 id="-6"><a href="#-6" class="headerlink" title=""></a><span class="label info">事件触发线程</span></h4><ul>
+<h4 id="-6"><a href="#-6" class="headerlink" title></a><span class="label info">事件触发线程</span></h4><ul>
 <li>归属于浏览器而不是JS引擎，用来控制事件循环（可以理解，JS引擎自己都忙不过来，需要浏览器另开线程协助）。</li>
 <li>当JS引擎执行代码块如setTimeOut时（也可来自浏览器内核的其他线程,如鼠标点击、AJAX异步请求等），会将对应任务添加到事件线程中。</li>
 <li>当对应的事件符合触发条件被触发时，该线程会把事件添加到待处理队列的队尾，等待JS引擎的处理。</li>
 <li>注意，由于JS的单线程关系，所以这些待处理队列中的事件都得排队等待JS引擎处理（当JS引擎空闲时才会去执行）。</li>
 </ul>
-<h4 id="-7"><a href="#-7" class="headerlink" title=""></a><span class="label info">定时触发器线程</span></h4><ul>
+<h4 id="-7"><a href="#-7" class="headerlink" title></a><span class="label info">定时触发器线程</span></h4><ul>
 <li>传说中的setInterval与setTimeout所在线程。</li>
 <li>浏览器定时计数器并不是由JavaScript引擎计数的,（因为JavaScript引擎是单线程的, 如果处于阻塞线程状态就会影响记计时的准确）。</li>
 <li>因此通过单独线程来计时并触发定时（计时完毕后，添加到事件队列中，等待JS引擎空闲后执行）。</li>
 <li>注意，W3C在HTML标准中规定，规定要求setTimeout中低于4ms的时间间隔算为4ms。</li>
 </ul>
-<h4 id="-8"><a href="#-8" class="headerlink" title=""></a><span class="label info">异步http请求线程</span></h4><ul>
+<h4 id="-8"><a href="#-8" class="headerlink" title></a><span class="label info">异步http请求线程</span></h4><ul>
 <li>在XMLHttpRequest在连接后是通过浏览器新开一个线程请求。</li>
 <li>将检测到状态变更时，如果设置有回调函数，异步线程就 <strong>产生状态变更事件</strong>，将这个回调再放入事件队列中。再由JavaScript引擎执行。</li>
 </ul>
@@ -663,7 +663,7 @@ table th:first-of-type {
 <li>就在FPS图表下方，你会看到CPU图表。<ul>
 <li>在CPU图表中的各种颜色与Summary面板里的颜色是相互对应的，Summary面板就在Performance面板的下方。</li>
 <li>CPU图表中的各种颜色代表着在这个时间段内，CPU在各种处理上所花费的时间。</li>
-<li>如果你看到了某个处理占用了大量的时间，那么这可能就是一个可以找到性能瓶颈的线索。详细看<a href="https://zhaoluting.github.io/2017/10/12/devTool/">Chrome调试指南</a>。<br><img src="/image/performance-theory/tool-cpu.png" alt="CPU"></li>
+<li>如果你看到了某个处理占用了大量的时间，那么这可能就是一个可以找到性能瓶颈的线索。详细看<a href="https://zhaoluting.github.io/2017/10/12/tool-devTool/">Chrome调试指南</a>。<br><img src="/image/performance-theory/tool-cpu.png" alt="CPU"></li>
 </ul>
 </li>
 <li>展开Main图表，Devtools展示了主线程运行状况。<ul>
@@ -735,7 +735,7 @@ table th:first-of-type {
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2018/07/22/eslint/" rel="next" title="常规eslint配置">
+              <a href="/2018/07/22/tool-eslint/" rel="next" title="常规eslint配置">
                 <i class="fa fa-chevron-left"></i> 常规eslint配置
               </a>
             
@@ -745,7 +745,7 @@ table th:first-of-type {
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2018/10/20/puppeteer-1/" rel="prev" title="puppeteer实战-微信文章爬取调研">
+              <a href="/2018/10/20/node-puppeteerWX/" rel="prev" title="puppeteer实战-微信文章爬取调研">
                 puppeteer实战-微信文章爬取调研 <i class="fa fa-chevron-right"></i>
               </a>
             
@@ -804,7 +804,7 @@ table th:first-of-type {
 
       <section class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image" src="/images/global/favicon-32x32-next.png" alt="zhaoluting">
             
@@ -819,7 +819,7 @@ table th:first-of-type {
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -844,11 +844,7 @@ table th:first-of-type {
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -877,15 +873,7 @@ table th:first-of-type {
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -982,7 +970,7 @@ table th:first-of-type {
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#优化标准-RAIL模型"><span class="nav-number">1.</span> <span class="nav-text">优化标准-RAIL模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TL-DR"><span class="nav-number">1.1.</span> <span class="nav-text">TL;DR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延迟与用户反应"><span class="nav-number">1.2.</span> <span class="nav-text">延迟与用户反应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAIL模型"><span class="nav-number">1.3.</span> <span class="nav-text">RAIL模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#"><span class="nav-number">1.3.1.</span> <span class="nav-text">response响应 – 在100ms内响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">Animation动画 – 在10ms内生成一帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">IDLE 空闲 – 利用空闲的时间完成推迟的工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-3"><span class="nav-number">1.3.4.</span> <span class="nav-text">LOAD 加载 – 在1000ms内呈现内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关原理"><span class="nav-number">2.</span> <span class="nav-text">相关原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器渲染进程"><span class="nav-number">2.1.</span> <span class="nav-text">浏览器渲染进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器的渲染进程是多线程的"><span class="nav-number">2.1.1.</span> <span class="nav-text">浏览器的渲染进程是多线程的</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#-4"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">GUI渲染线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-5"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">JS引擎线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-6"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">事件触发线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-7"><span class="nav-number">2.1.1.4.</span> <span class="nav-text">定时触发器线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-8"><span class="nav-number">2.1.1.5.</span> <span class="nav-text">异步http请求线程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器渲染流程"><span class="nav-number">2.1.2.</span> <span class="nav-text">浏览器渲染流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能检测工具"><span class="nav-number">3.</span> <span class="nav-text">性能检测工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-Devtools-–-Network"><span class="nav-number">3.1.</span> <span class="nav-text">Chrome Devtools – Network</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开"><span class="nav-number">3.1.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-Table-请求列表"><span class="nav-number">3.1.2.</span> <span class="nav-text">Request Table 请求列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary-总览"><span class="nav-number">3.1.3.</span> <span class="nav-text">Summary 总览</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-Devtools-–-Performance"><span class="nav-number">3.2.</span> <span class="nav-text">Chrome Devtools –  Performance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析结果-–-分析每一秒的帧"><span class="nav-number">3.2.2.</span> <span class="nav-text">分析结果 – 分析每一秒的帧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-Devtools-–-Audits"><span class="nav-number">3.3.</span> <span class="nav-text">Chrome Devtools –  Audits</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析结果-综合分析"><span class="nav-number">3.3.2.</span> <span class="nav-text">分析结果 - 综合分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他检测工具推荐"><span class="nav-number">3.4.</span> <span class="nav-text">其他检测工具推荐</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#优化标准-RAIL模型"><span class="nav-number">1.</span> <span class="nav-text">优化标准-RAIL模型</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#TL-DR"><span class="nav-number">1.1.</span> <span class="nav-text">TL;DR</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#延迟与用户反应"><span class="nav-number">1.2.</span> <span class="nav-text">延迟与用户反应</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#RAIL模型"><span class="nav-number">1.3.</span> <span class="nav-text">RAIL模型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#null"><span class="nav-number">1.3.1.</span> <span class="nav-text">response响应 – 在100ms内响应</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-1"><span class="nav-number">1.3.2.</span> <span class="nav-text">Animation动画 – 在10ms内生成一帧</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-2"><span class="nav-number">1.3.3.</span> <span class="nav-text">IDLE 空闲 – 利用空闲的时间完成推迟的工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#-3"><span class="nav-number">1.3.4.</span> <span class="nav-text">LOAD 加载 – 在1000ms内呈现内容</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#相关原理"><span class="nav-number">2.</span> <span class="nav-text">相关原理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#浏览器渲染进程"><span class="nav-number">2.1.</span> <span class="nav-text">浏览器渲染进程</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器的渲染进程是多线程的"><span class="nav-number">2.1.1.</span> <span class="nav-text">浏览器的渲染进程是多线程的</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#-4"><span class="nav-number">2.1.1.1.</span> <span class="nav-text">GUI渲染线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-5"><span class="nav-number">2.1.1.2.</span> <span class="nav-text">JS引擎线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-6"><span class="nav-number">2.1.1.3.</span> <span class="nav-text">事件触发线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-7"><span class="nav-number">2.1.1.4.</span> <span class="nav-text">定时触发器线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#-8"><span class="nav-number">2.1.1.5.</span> <span class="nav-text">异步http请求线程</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#浏览器渲染流程"><span class="nav-number">2.1.2.</span> <span class="nav-text">浏览器渲染流程</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#性能检测工具"><span class="nav-number">3.</span> <span class="nav-text">性能检测工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-Devtools-–-Network"><span class="nav-number">3.1.</span> <span class="nav-text">Chrome Devtools – Network</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开"><span class="nav-number">3.1.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Request-Table-请求列表"><span class="nav-number">3.1.2.</span> <span class="nav-text">Request Table 请求列表</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Summary-总览"><span class="nav-number">3.1.3.</span> <span class="nav-text">Summary 总览</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-Devtools-–-Performance"><span class="nav-number">3.2.</span> <span class="nav-text">Chrome Devtools –  Performance</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开-1"><span class="nav-number">3.2.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析结果-–-分析每一秒的帧"><span class="nav-number">3.2.2.</span> <span class="nav-text">分析结果 – 分析每一秒的帧</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Chrome-Devtools-–-Audits"><span class="nav-number">3.3.</span> <span class="nav-text">Chrome Devtools –  Audits</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#打开-2"><span class="nav-number">3.3.1.</span> <span class="nav-text">打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#分析结果-综合分析"><span class="nav-number">3.3.2.</span> <span class="nav-text">分析结果 - 综合分析</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#其他检测工具推荐"><span class="nav-number">3.4.</span> <span class="nav-text">其他检测工具推荐</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#参考文章"><span class="nav-number">4.</span> <span class="nav-text">参考文章</span></a></li></ol></div>
             
 
           </div>
@@ -1014,7 +1002,7 @@ table th:first-of-type {
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">110k</span>
+    <span title="站点总字数">115k</span>
   
 
   
@@ -1023,7 +1011,7 @@ table th:first-of-type {
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">1:40</span>
+    <span title="站点阅读时长">1:45</span>
   
 </div>
 

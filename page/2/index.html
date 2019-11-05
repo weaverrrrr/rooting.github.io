@@ -15,7 +15,7 @@
 
 
 <html class="theme-next muse use-motion" lang="zh-CN">
-<head><meta name="generator" content="Hexo 3.8.0">
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
@@ -189,7 +189,7 @@
 
 </head>
 
-<body itemscope="" itemtype="http://schema.org/WebPage" lang="zh-CN">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-CN">
 
   
   
@@ -200,7 +200,7 @@
   page-home">
     <div class="headband"></div>
 
-    <header id="header" class="header" itemscope="" itemtype="http://schema.org/WPHeader">
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
       <div class="header-inner"><div class="site-brand-wrapper">
   <div class="site-meta ">
     
@@ -351,20 +351,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/06/27/slefTest/">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/07/22/tool-eslint/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhaoluting">
       <meta itemprop="description" content="前端小开发">
       <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="zhaoluting">
     </span>
 
@@ -375,7 +375,195 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/06/27/slefTest/" itemprop="url">
+                <a class="post-title-link" href="/2018/07/22/tool-eslint/" itemprop="url">
+                  常规eslint配置
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2018-07-22 16:24:36" itemprop="dateCreated datePublished" datetime="2018-07-22T16:24:36+08:00">2018-07-22</time>
+            
+
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-symbolscount">
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                <span title="本文字数">4.1k</span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                <span title="阅读时长">4 分钟</span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h2 id="eslint配置过程"><a href="#eslint配置过程" class="headerlink" title="eslint配置过程"></a>eslint配置过程</h2><h3 id="安装需要依赖的npm包"><a href="#安装需要依赖的npm包" class="headerlink" title="安装需要依赖的npm包"></a>安装需要依赖的npm包</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">"eslint"</span>: <span class="string">"^4.19.1"</span>, <span class="comment">// 必须</span></span><br><span class="line"><span class="string">"babel-eslint"</span>: <span class="string">"^8.2.4"</span>, <span class="comment">// 支持babel</span></span><br><span class="line"><span class="string">"eslint-loader"</span>: <span class="string">"^2.0.0"</span>, <span class="comment">// 使webpack支持eslint</span></span><br><span class="line"><span class="string">"eslint-config-google"</span>: <span class="string">"^0.9.1"</span>, <span class="comment">// Google的ESLint可共享配置</span></span><br><span class="line"><span class="string">"eslint-plugin-vue"</span>: <span class="string">"^4.5.0"</span>, <span class="comment">// Vue.js的官方ESLint插件</span></span><br><span class="line"><span class="string">"eslint-plugin-import"</span>: <span class="string">"^2.13.0"</span>, <span class="comment">// 支持使用第三方的扩展</span></span><br></pre></td></tr></table></figure>
+<p><strong>项目下运行命令行</strong>：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ npm install --save-dev eslint@4.19.1 babel-eslint@8.2.4 eslint-loader@2.0.0 eslint-config-google@0.9.1 eslint-plugin-vue@4.5.0 eslint-plugin-import@2.13.0</span><br></pre></td></tr></table></figure>
+          <!--noindex-->
+          
+            <div class="post-button text-center">
+              <a class="btn" href="/2018/07/22/tool-eslint/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+         
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/06/27/ability-slefTest/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="zhaoluting">
+      <meta itemprop="description" content="前端小开发">
+      <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="zhaoluting">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/06/27/ability-slefTest/" itemprop="url">
                   如何提高前端的自测能力
                 </a>
               
@@ -420,7 +608,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/能力/" itemprop="url" rel="index"><span itemprop="name">能力</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/能力/" itemprop="url" rel="index"><span itemprop="name">能力</span></a></span>
 
                 
                 
@@ -487,7 +675,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/06/27/slefTest/#more" rel="contents">
+              <a class="btn" href="/2018/06/27/ability-slefTest/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -539,20 +727,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/05/29/asynchronous/">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/05/29/node-asynchronous/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhaoluting">
       <meta itemprop="description" content="前端小开发">
       <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="zhaoluting">
     </span>
 
@@ -563,7 +751,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/05/29/asynchronous/" itemprop="url">
+                <a class="post-title-link" href="/2018/05/29/node-asynchronous/" itemprop="url">
                   node.js的异步IO机制
                 </a>
               
@@ -608,7 +796,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
 
                 
                 
@@ -673,7 +861,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/05/29/asynchronous/#more" rel="contents">
+              <a class="btn" href="/2018/05/29/node-asynchronous/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -725,20 +913,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/03/08/database/">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/03/08/sql-guide/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhaoluting">
       <meta itemprop="description" content="前端小开发">
       <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="zhaoluting">
     </span>
 
@@ -749,7 +937,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/03/08/database/" itemprop="url">
+                <a class="post-title-link" href="/2018/03/08/sql-guide/" itemprop="url">
                   面向前端的数据库指南
                 </a>
               
@@ -794,7 +982,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
 
                 
                 
@@ -859,7 +1047,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/03/08/database/#more" rel="contents">
+              <a class="btn" href="/2018/03/08/sql-guide/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -911,20 +1099,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/01/25/Mac-terminal/">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2018/01/25/tool-zsh/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhaoluting">
       <meta itemprop="description" content="前端小开发">
       <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="zhaoluting">
     </span>
 
@@ -935,7 +1123,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2018/01/25/Mac-terminal/" itemprop="url">
+                <a class="post-title-link" href="/2018/01/25/tool-zsh/" itemprop="url">
                   Mac terminal入门篇
                 </a>
               
@@ -980,7 +1168,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/系统/" itemprop="url" rel="index"><span itemprop="name">系统</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
 
                 
                 
@@ -1052,7 +1240,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2018/01/25/Mac-terminal/#more" rel="contents">
+              <a class="btn" href="/2018/01/25/tool-zsh/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1104,20 +1292,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2017/11/01/swaggerStandard/">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2017/11/01/tool-swagger/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhaoluting">
       <meta itemprop="description" content="前端小开发">
       <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="zhaoluting">
     </span>
 
@@ -1128,7 +1316,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/11/01/swaggerStandard/" itemprop="url">
+                <a class="post-title-link" href="/2017/11/01/tool-swagger/" itemprop="url">
                   swagger文档规范
                 </a>
               
@@ -1173,7 +1361,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/沟通/" itemprop="url" rel="index"><span itemprop="name">沟通</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
 
                 
                 
@@ -1238,7 +1426,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2017/11/01/swaggerStandard/#more" rel="contents">
+              <a class="btn" href="/2017/11/01/tool-swagger/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1290,20 +1478,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2017/10/12/devTool/">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2017/10/12/tool-devTool/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhaoluting">
       <meta itemprop="description" content="前端小开发">
       <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="zhaoluting">
     </span>
 
@@ -1314,7 +1502,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/10/12/devTool/" itemprop="url">
+                <a class="post-title-link" href="/2017/10/12/tool-devTool/" itemprop="url">
                   chrome调试指南
                 </a>
               
@@ -1359,7 +1547,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/前端/" itemprop="url" rel="index"><span itemprop="name">前端</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
 
                 
                 
@@ -1427,7 +1615,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2017/10/12/devTool/#more" rel="contents">
+              <a class="btn" href="/2017/10/12/tool-devTool/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1479,20 +1667,20 @@
 
   
 
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
   
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2017/06/15/hello-world/">
+    <link itemprop="mainEntityOfPage" href="https://zhaoluting.github.io/2017/06/15/tool-hexo/">
 
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zhaoluting">
       <meta itemprop="description" content="前端小开发">
       <meta itemprop="image" content="/images/global/favicon-32x32-next.png">
     </span>
 
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
       <meta itemprop="name" content="zhaoluting">
     </span>
 
@@ -1503,7 +1691,7 @@
         
           <h1 class="post-title" itemprop="name headline">
                 
-                <a class="post-title-link" href="/2017/06/15/hello-world/" itemprop="url">
+                <a class="post-title-link" href="/2017/06/15/tool-hexo/" itemprop="url">
                   Hello World
                 </a>
               
@@ -1548,7 +1736,7 @@
                 <span class="post-meta-item-text">分类于</span>
               
               
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/其他/" itemprop="url" rel="index"><span itemprop="name">其他</span></a></span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/工具/" itemprop="url" rel="index"><span itemprop="name">工具</span></a></span>
 
                 
                 
@@ -1615,7 +1803,7 @@
           <!--noindex-->
           
             <div class="post-button text-center">
-              <a class="btn" href="/2017/06/15/hello-world/#more" rel="contents">
+              <a class="btn" href="/2017/06/15/tool-hexo/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>
@@ -1691,7 +1879,7 @@
 
       <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
-          <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
               <img class="site-author-image" itemprop="image" src="/images/global/favicon-32x32-next.png" alt="zhaoluting">
             
@@ -1706,7 +1894,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">17</span>
+                    <span class="site-state-item-count">18</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -1731,11 +1919,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">8</span>
+                    <span class="site-state-item-count">6</span>
                     <span class="site-state-item-name">分类</span>
                   </a>
                 </div>
@@ -1764,15 +1948,7 @@
                     
                       
                     
-                      
-                    
-                      
-                    
-                      
-                    
-                      
-                    
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">8</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
@@ -1885,7 +2061,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">110k</span>
+    <span title="站点总字数">115k</span>
   
 
   
@@ -1894,7 +2070,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">1:40</span>
+    <span title="站点阅读时长">1:45</span>
   
 </div>
 
