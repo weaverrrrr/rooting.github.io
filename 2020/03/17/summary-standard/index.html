@@ -124,14 +124,14 @@
   <meta name="description" content="规范的重要性不言而喻，决定了团队的代码质量和风格走向。规范有很多方面，比如流程规范、commit规范、readme规范、安全规范等等。团队越大，越能凸显出规范的作用。这篇就简单总结下各种规范，还不完整，以后慢慢补充。（立起了一个flag）">
 <meta name="keywords" content="summary">
 <meta property="og:type" content="article">
-<meta property="og:title" content="summary-standard">
+<meta property="og:title" content="规范汇总">
 <meta property="og:url" content="https://zhaoluting.github.io/2020/03/17/summary-standard/index.html">
 <meta property="og:site_name" content="zhaoluting">
 <meta property="og:description" content="规范的重要性不言而喻，决定了团队的代码质量和风格走向。规范有很多方面，比如流程规范、commit规范、readme规范、安全规范等等。团队越大，越能凸显出规范的作用。这篇就简单总结下各种规范，还不完整，以后慢慢补充。（立起了一个flag）">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2020-11-03T05:43:17.788Z">
+<meta property="og:updated_time" content="2020-11-03T09:44:37.547Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="summary-standard">
+<meta name="twitter:title" content="规范汇总">
 <meta name="twitter:description" content="规范的重要性不言而喻，决定了团队的代码质量和风格走向。规范有很多方面，比如流程规范、commit规范、readme规范、安全规范等等。团队越大，越能凸显出规范的作用。这篇就简单总结下各种规范，还不完整，以后慢慢补充。（立起了一个flag）">
 
 
@@ -149,7 +149,7 @@
   };
 </script>
 
-  <title>summary-standard | zhaoluting</title>
+  <title>规范汇总 | zhaoluting</title>
   
 
 
@@ -374,7 +374,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">summary-standard
+          <h1 class="post-title" itemprop="name headline">规范汇总
               
             
           </h1>
@@ -570,7 +570,7 @@
 <li><strong>内容</strong> (覆写元素的内容)：<code>v-html</code>、<code>v-text</code></li>
 </ol>
 <p><strong>单文件组件的顶级元素的顺序</strong><br><code>&lt;style&gt;</code>放在最后，所有组件顺序都保持一致即可</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ComponentA.vue --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span>...<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="comment">/* ... */</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"><span class="comment">/* ... */</span></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- ComponentB.vue --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span>...<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="comment">/* ... */</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="css"><span class="comment">/* ... */</span></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">&lt;!-- ComponentA.vue --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span>...<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="comment">/* ... */</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined">/* ... */</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">&lt;!-- ComponentB.vue --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">template</span>&gt;</span>...<span class="tag">&lt;/<span class="name">template</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span>&gt;</span><span class="javascript"><span class="comment">/* ... */</span></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">style</span>&gt;</span><span class="undefined">/* ... */</span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span><br></pre></td></tr></table></figure>
 <h3 id="小建议"><a href="#小建议" class="headerlink" title="小建议"></a>小建议</h3><ul>
 <li><strong>如果一组 <code>v-if</code> + <code>v-else</code>的元素类型相同，最好使用</strong><code>key</code> (比如两个 <code>&lt;div&gt;</code> 元素)。因为vue在相同类型的元素之间切换时，会修补已存在元素，而不是将旧的元素移除然后在同一位置添加新元素。如果本不相同的元素被识别为相同，可能会出现<a href="https://jsfiddle.net/chrisvfritz/bh8fLeds/" target="_blank" rel="noopener">意料之外的结果</a>。</li>
 <li><strong>元素选择器应该避免在<code>scoped</code>中出现</strong>，大量的元素和 attribute 组合的选择器 (比如 <code>button[data-v-f3f3eg9]</code>) 会比类和 attribute 组合的选择器 慢，所以应该尽可能选用类选择器。</li>
@@ -727,8 +727,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/03/20/summary-problem/" rel="prev" title="前端开发常见问题">
-                前端开发常见问题 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/03/23/tool-laravel/" rel="prev" title="Laravel5.6 - 前端速览">
+                Laravel5.6 - 前端速览 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -801,7 +801,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">22</span>
+                    <span class="site-state-item-count">21</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -988,7 +988,7 @@
       <i class="fa fa-area-chart"></i>
     </span>
     
-    <span title="站点总字数">142k</span>
+    <span title="站点总字数">139k</span>
   
 
   
@@ -997,7 +997,7 @@
       <i class="fa fa-coffee"></i>
     </span>
     
-    <span title="站点阅读时长">2:09</span>
+    <span title="站点阅读时长">2:06</span>
   
 </div>
 
